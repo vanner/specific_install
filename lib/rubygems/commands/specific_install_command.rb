@@ -31,6 +31,10 @@ class Gem::Commands::SpecificInstallCommand < Gem::Command
     add_option('-u', '--user-install', arguments) do |userinstall, options|
       options[:userinstall] = userinstall
     end
+
+    add_option('-i', '--install-dir', arguments) do |install_directory, options|
+      options[:install_directory] = install_directory
+    end
   end
 
   def arguments
@@ -193,6 +197,8 @@ class Gem::Commands::SpecificInstallCommand < Gem::Command
     if gem
       install_options = {}
       install_options[:user_install] = options[:userinstall].nil? ? nil : true
+      install_options[:install_directory] = options[:install_directory].present? ? options[:install_directory] : nil
+
       inst = Gem::DependencyInstaller.new install_options
       inst.install gem
     else
